@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoulJourney Hotel</title>
+    <title>Hotel Booking</title>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" href="img/HotelBooking.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -13,7 +14,7 @@
         <nav>
             <div class="language-switcher">
                 <div class="selected-language" onclick="toggleLanguageMenu()">
-                    <img src="https://flagcdn.com/br.svg" alt="Português" class="flag">
+                    <img src="https://flagcdn.com/br.svg" alt="pt-BR" class="flag"> <!-- Alt corrigido -->
                     <span class="language_arro">▼</span>
                 </div>
                 <div class="language-menu">
@@ -37,10 +38,10 @@
                 </div>
             </div>
             <ul>
-                <li><a href="#explore">Home</a></li>
-                <li><a href="#rooms">Quartos</a></li>
-                <li><a href="#about">Sobre nós</a></li>
-                <li><a href="#footer">Contato</a></li>
+                <li><a href="#explore" data-i18n="navHome">Home</a></li>
+                <li><a href="#rooms" data-i18n="navRooms">Quartos</a></li>
+                <li><a href="#about" data-i18n="navAbout">Sobre nós</a></li>
+                <li><a href="#footer" data-i18n="navContact">Contato</a></li>
             </ul>
             <div class="header-buttons">
                 <button class="dark-mode-toggle">
@@ -102,9 +103,9 @@
         </div>
       
         <div class="hero-content">
-          <h1>Rooms and Suites</h1>
-          <p>The elegant luxury bedrooms in this gallery showcase custom interior designs & decorating ideas.</p>
-          <button class="cta-button">Selecionar Quarto</button>
+          <h1 data-i18n="heroTitle">Rooms and Suites</h1>
+          <p data-i18n="heroSubtitle">The elegant luxury bedrooms in this gallery showcase custom interior designs & decorating ideas.</p>
+          <button class="cta-button" data-i18n="selectRoom">Selecionar Quarto</button>
         </div>
       
         <div class="slide-dots"></div>
@@ -126,21 +127,25 @@
             <img src="img/Fachada.jpeg" alt="Fachada histórica do SoulJorney Hotel">
         </div>
         <div class="texto-historia">
-            <h2>Nossa História</h2>
-            <p>Fundado em 1980 pelo por Josué, Era um puteiro, mas o povo tava dormindo tanto aqui que viro hotel</p>
+            <h2 data-i18n="ourStory">Da Boemia ao Repouso: Nossa Jornada</h2>
+            <p data-i18n="storyText">Em 1980, o visionário Josué Montenegro inaugurou o que seria muito mais que quatro paredes - um palco de histórias. O edifício Art Déco na Rua das Palmeiras, originalmente concebido como casa noturna, revelou-se mestre em transformar visitantes casuais em residentes entusiastas. Diz a lenda que os violinos da orquestra tocavam tão suave, e os sofás veludos eram tão convidativos, que os frequentadores preferiam adormecer ao som do jazz a seguir para casa.</p>
+        
+            <p>Assim nasceu o SoulJourney: onde os abraços da noite se transformaram em aconchego matinal. Conservamos o charme transgressor em detalhes - os espelhos bisotados que testemunharam mil confidências, o mármore italiano que já serviu de pista de dança improvisada. Cada suíte é um tributo a essa dualidade: cortinas pesadas que silenciam o mundo, lençóis que envolvem como um suspiro, e mini-bares que mantêm o espírito festivo do fundador.</p>
+        
+            <p>Hoje, sob a gestão da neta de Josué, Clara Montenegro, somos um santuário urbano onde a herança boêmia dialoga com o luxo contemporâneo. O aroma de café colonial que flutua no lobby às sextas-feiras ainda atrai antigos frequentadores - agora acompanhados de netos e malas de viagem. Nossos corredores, outrora testemunhas de paqueras ousadas, hoje guardam segredos de propostas de casamento e reencontros familiares.</p>
             
             <div class="dados-hotel">
                 <div class="dado-item">
                     <h3>120</h3>
-                    <p>Suítes Exclusivas</p>
+                    <p data-i18n="rating" class="rating">Suítes Exclusivas</p>
                 </div>
                 <div class="dado-item">
                     <h3>4.9/5</h3>
-                    <p>Avaliação dos Hóspedes</p>
+                    <p data-i18n="rating" class="rating">Avaliação dos Hóspedes</p>
                 </div>
                 <div class="dado-item">
                     <h3>5x</h3>
-                    <p>Prêmios de Excelência</p>
+                    <p data-i18n="rating" class="rating">Prêmios de Excelência</p>
                 </div>    
             </div>
         </div>
@@ -148,69 +153,69 @@
 
    <!--Quartinhos-->
    <section class="rooms" id="rooms">
-    <!-- Quarto 1 Luxo-->
-    <div class="room-card">
-        <div class="image-container">
-            <!--
-            <div class="door-container" onclick="toggleDoor(this)">
-                <div class="door">
-                    <div class="door-handle"></div>
+        <!-- Quarto 1 Luxo-->
+        <div class="room-card">
+            <div class="image-container">
+                <!--
+                <div class="door-container" onclick="toggleDoor(this)">
+                    <div class="door">
+                        <div class="door-handle"></div>
+                    </div>
                 </div>
+                -->
+                <img 
+                    src="img/LuxoDia.jpg" 
+                    data-original="img/LuxoDia.jpg"
+                    data-dark="img/LuxoNoite.jpg"
+                    alt="Luxo"
+            300>
             </div>
-            -->
-            <img 
-                src="img/LuxoDia.jpg" 
-                data-original="img/LuxoDia.jpg"
-                data-dark="img/LuxoNoite.jpg"
-                alt="Luxo"
-          300>
+            <h3>Luxo</h3>
+            <p>R$300,000</p>
+            <button class="book-btn" onclick="selectRoom('Luxo')">Escolher quarto</button>
         </div>
-        <h3>Luxo</h3>
-        <p>R$300,000</p>
-        <button class="book-btn" onclick="selectRoom('Luxo')">Escolher quarto</button>
-    </div>
-    <!-- Quarto 2 Imperial-->
-    <div class="room-card">
-        <div class="image-container">
-            <!--
-            <div class="door-container" onclick="toggleDoor(this)">
-                <div class="door">
-                    <div class="door-handle"></div>
+        <!-- Quarto 2 Imperial-->
+        <div class="room-card">
+            <div class="image-container">
+                <!--
+                <div class="door-container" onclick="toggleDoor(this)">
+                    <div class="door">
+                        <div class="door-handle"></div>
+                    </div>
                 </div>
+                -->
+                <img 
+                    src="img/ImperialDia.jpg" 
+                    data-original="img/ImperialDia.jpg"
+                    data-dark="img/ImperialNoite.jpg"
+                    alt="Imperial"
+                >
             </div>
-            -->
-            <img 
-                src="img/ImperialDia.jpg" 
-                data-original="img/ImperialDia.jpg"
-                data-dark="img/ImperialNoite.jpg"
-                alt="Imperial"
-            >
+            <h3>Suite Imperial</h3>
+            <p>R$270,000</p>
+            <button class="book-btn" onclick="selectRoom('Imperial')">Escolher quarto</button>
         </div>
-        <h3>Suite Imperial</h3>
-        <p>R$270,000</p>
-        <button class="book-btn" onclick="selectRoom('Imperial')">Escolher quarto</button>
-    </div>
-    <!-- Quarto 3 Padrao-->
-    <div class="room-card">
-        <div class="image-container">
-            <!--
-            <div class="door-container" onclick="toggleDoor(this)">
-                <div class="door">
-                    <div class="door-handle"></div>
+        <!-- Quarto 3 Padrao-->
+        <div class="room-card">
+            <div class="image-container">
+                <!--
+                <div class="door-container" onclick="toggleDoor(this)">
+                    <div class="door">
+                        <div class="door-handle"></div>
+                    </div>
                 </div>
+                -->
+                <img 
+                    src="img/ComumDia.jpg" 
+                    data-original="img/ComumDia.jpg"
+                    data-dark="img/ComumNoite.jpg"
+                    alt="Classico"
+                >
             </div>
-            -->
-            <img 
-                src="img/ComumDia.jpg" 
-                data-original="img/ComumDia.jpg"
-                data-dark="img/ComumNoite.jpg"
-                alt="Classico"
-            >
+            <h3>Quarto Classico</h3>
+            <p>R$140,000</p>
+            <button class="book-btn" onclick="selectRoom('Classico')">Escolher quarto</button>
         </div>
-        <h3>Quarto Classico</h3>
-        <p>R$140,000</p>
-        <button class="book-btn" onclick="selectRoom('Classico')">Escolher quarto</button>
-    </div>
     </section>
 
     <!--Cards Detalhes -->
@@ -387,7 +392,7 @@
     <div id="hotel-Booking-Modal" class="book-modal">
         <div class="book-modal-content">
           <span class="book-modal-close" onclick="hotelCloseModal()">&times;</span>
-          <h2>Faça sua reserva</h2>
+          <h2 data-i18n="bookTitle">Faça sua reserva</h2>
       
           <!-- Corpo rolável -->
           <div class="book-modal-body">
@@ -745,28 +750,27 @@
 
     <footer id="footer">
         <div class="social-container">
-            <a href="#" class="social-icon whatsapp">
+            <a href="https://wa.me/5512996754720?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20detalhes%20sobre%20o%20Hotel%20Booking" target="_blank" class="social-icon whatsapp">
                 <i class="fab fa-whatsapp"></i>
             </a>
-            <a href="#" class="social-icon facebook">
+            <a href="https://www.facebook.com/profile.php?id=61574963379041" target="_blank" class="social-icon facebook">
                 <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="#" class="social-icon instagram">
+            <a href="https://www.instagram.com/hot.elbooking" target="_blank" class="social-icon instagram">
                 <i class="fab fa-instagram"></i>
             </a>
         </div>
         
         <div class="footer-section">
-            <h3>Sobre Nós</h3>
-            <p>Disturbing the peaceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>
+            <h3>Desde 1980 nossa franquia</h3>
         </div>
         <div class="footer-section">
             <h3>Contato</h3>
-            <p>Looking in to my eyeeeeeeeeeeeeeeeeeeeees</p>
+            <p>HotelBooking.bk@gmail.com</p>
         </div>
         <div class="footer-section">
-            <h3>Links Úteis</h3>
-            <p>The tenacityyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
+            <h3>CNPJ</h3>
+            <p>71.952.362/0001-20</p>
         </div>
     </footer>
 
@@ -785,7 +789,7 @@
             <source src="https://www.soundjay.com/door/door-creak-01.mp3" type="audio/mpeg">
         </audio>
     -->
-
+    <script src="js/language.js"></script>
     <script src="js/index.js"></script>
 </body>
 </html>

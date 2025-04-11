@@ -1,6 +1,6 @@
 
 const themeToggle = document.querySelector('.dark-mode-toggle');
-const roomImages = document.querySelectorAll('.room-card img');
+const roomImages = document.querySelectorAll('.rooms .room-card img');
 const slideImages = document.querySelectorAll('.slide img');
 const scrollIndicator = document.getElementById("scrollIndicator");
 const footer = document.querySelector('footer');
@@ -11,6 +11,7 @@ const languages = [
     { code: 'fr-FR', name: 'Français', flag: 'https://flagcdn.com/fr.svg' },
     { code: 'es-ES', name: 'Español', flag: 'https://flagcdn.com/es.svg' }
 ];
+
 
     /*
     // Scroll animado inicial (apenas uma vez)
@@ -48,16 +49,22 @@ function setTheme(isDark) {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     
-    // Trocar imagens dos quartos
+    // Atualizar imagens dos quartos
     roomImages.forEach(img => {
         const src = isDark ? img.dataset.dark : img.dataset.original;
-        if (src) img.src = src;
+        if (src) {
+            img.src = src;
+            img.onload = () => console.log('Imagem alterada:', img.src); // Log para debug
+        }
     });
 
-    // Trocar imagens do slideshow
+    // Atualizar imagens do slideshow
     slideImages.forEach(img => {
         const src = isDark ? img.dataset.dark : img.dataset.original;
-        if (src) img.src = src;
+        if (src) {
+            img.src = src;
+            img.onload = () => console.log('Slide alterado:', img.src); // Log para debug
+        }
     });
 }
 
@@ -151,11 +158,15 @@ function selectRoom(roomType) {
         const checkIn = new Date(document.getElementById('checkInDate').value);
         const checkOut = new Date(document.getElementById('checkOutDate').value);
         const select = document.getElementById('roomSelect');
-        const pricePerNight = parseFloat(select.options[select.selectedIndex]?.dataset.price) || 0;
         
-        const nights = calculateDays(checkIn, checkOut);
-        const total = nights * pricePerNight;
-        document.getElementById('totalPrice').textContent = `R$ ${total.toFixed(2)}`;
+        if(isNaN(checkIn)) return;
+        if(isNaN(checkOut)) return;
+        
+        const pricePerNight = parseFloat(select.options[select.selectedIndex]?.dataset.price) || 0;
+        const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+        
+        document.getElementById('totalPrice').textContent = 
+            `R$ ${(nights * pricePerNight).toLocaleString('pt-BR')}`;
     }
     
     // Submeter reserva
@@ -174,22 +185,103 @@ function selectRoom(roomType) {
 
 // Colocar idioma
 function setLanguage(lang) {
-    const elements = document.querySelectorAll("[data-i18n]");
-    elements.forEach(el => {
-      const key = el.getAttribute("data-i18n");
-      if (translations[lang] && translations[lang][key]) {
-        el.textContent = translations[lang][key];
-      }
+    // Elementos estáticos
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
     });
-  
+
+    // Elementos dinâmicos
+    const dynamicElements = {
+        '#roomSelect option[value="Classico"]': 'classicRoom',
+        '#roomSelect option[value="Imperial"]': 'imperialSuite',
+        '#roomSelect option[value="Luxo"]': 'luxurySuite',
+        '.price-display h3': 'totalEstimate'
+    };
+
+    Object.entries(dynamicElements).forEach(([selector, key]) => {
+        const element = document.querySelector(selector);
+        if (element && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+
+    // Atualizar preços formatados
+    document.querySelectorAll('.room-card p').forEach(p => {
+        const price = p.textContent.match(/\d+/)[0];
+        const formattedPrice = new Intl.NumberFormat(lang, {
+            style: 'currency',
+            currency: lang === 'pt-BR' ? 'BRL' : 'USD'
+        }).format(price);
+        p.innerHTML = formattedPrice + ` <span data-i18n="perNight">por noite</span>`;
+    });
+
     localStorage.setItem('language', lang);
+    document.documentElement.lang = lang.split('-')[0];
 }
-  
-  // Carregar idioma salvo
-document.addEventListener("DOMContentLoaded", () => {
-    const savedLang = localStorage.getItem('language') || 'pt';
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+    // Carrega preferências salvas
+    const savedLang = localStorage.getItem('language') || 'pt-BR';
+    const savedFlag = localStorage.getItem('selectedFlag') || 'https://flagcdn.com/br.svg';
+    
+    // Aplica configurações iniciais
+    document.querySelector('.selected-language').innerHTML = `
+        <img src="${savedFlag}" alt="${savedLang}" class="flag">
+        <span class="arrow">▼</span>
+    `;
+    
     setLanguage(savedLang);
 });
+
+//carousel 2
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('carouselTrack');
+    const items = Array.from(track.children);
+    const prevBtn = document.querySelector('.carousel-button.prev');
+    const nextBtn = document.querySelector('.carousel-button.next');
+    let itemWidth, currentIndex = 1, isMoving = false;
+
+    function setupCarousel() {
+      itemWidth = items[0].getBoundingClientRect().width + 20; // inclui gap
+      items.forEach((item, idx) => {
+        item.style.left = `${idx * itemWidth}px`;
+      });
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    }
+
+    setupCarousel();
+    window.addEventListener('resize', setupCarousel);
+
+    function moveTo(index) {
+      if (isMoving) return;
+      isMoving = true;
+      track.style.transition = 'transform 0.4s ease';
+      track.style.transform = `translateX(-${index * itemWidth}px)`;
+      currentIndex = index;
+    }
+
+    nextBtn.addEventListener('click', () => moveTo(currentIndex + 1));
+    prevBtn.addEventListener('click', () => moveTo(currentIndex - 1));
+
+    track.addEventListener('transitionend', () => {
+      const item = items[currentIndex];
+      if (item.classList.contains('clone')) {
+        track.style.transition = 'none';
+        currentIndex = item.dataset.index === 'last' ? items.length - 2 : 1;
+        requestAnimationFrame(() => {
+          track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+        });
+      }
+      setTimeout(() => { isMoving = false; }, 20);
+    });
+  });
+
+
 
 // Controle dos Modais
 function toggleModal() {
@@ -610,18 +702,19 @@ function initSlideshow() {
 //Buscar Linguas
 function toggleLanguageMenu() {
     const menu = document.querySelector('.language-menu');
-    menu.classList.toggle('show');
-    
-    // Atualiza as opções do menu
     const currentLang = document.querySelector('.selected-language img').alt;
+    
+    // Atualiza visibilidade das opções
     menu.querySelectorAll('.language-option').forEach(option => {
         option.style.display = option.dataset.lang === currentLang ? 'none' : 'flex';
     });
+    
+    menu.classList.toggle('show');
 }
 
 document.querySelectorAll('.language-option').forEach(option => {
     option.addEventListener('click', function() {
-        const langCode = this.dataset.lang;
+        const langCode = this.dataset.lang; // Deve retornar 'pt-BR', 'en-US', etc
         const flagUrl = this.dataset.flag;
         
         // Atualiza o seletor principal
@@ -631,14 +724,11 @@ document.querySelectorAll('.language-option').forEach(option => {
             <span class="arrow">▼</span>
         `;
         
-        // Carrega o idioma
-        loadLanguage(langCode);
-        
-        // Salva a preferência
-        localStorage.setItem('selectedLanguage', langCode);
+        // Atualiza o idioma e armazenamento
+        setLanguage(langCode);
+        localStorage.setItem('language', langCode);
         localStorage.setItem('selectedFlag', flagUrl);
         
-        // Fecha o menu
         toggleLanguageMenu();
     });
 });
@@ -755,3 +845,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) document.body.setAttribute('data-theme', savedTheme);
 });
+
+

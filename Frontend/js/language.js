@@ -134,39 +134,143 @@ const translations = {
       footerContact: "Looking in to my eyes...",
       footerLinks: "The tenacity..."
   },
-  'fr-FR': {
-      // Traduções em francês...
+'fr-FR': {
+      // Header
+      navHome: "Accueil",
+      navRooms: "Chambres",
+      navAbout: "À propos",
+      navContact: "Contact",
+      loginBtn: "Connexion",
+      langPt: "Portugais",
+      langEn: "Anglais",
+      langFr: "Français",
+      langEs: "Espagnol",
+
+      // Hero Section
+      heroTitle: "Suites et Chambres",
+      heroSubtitle: "Nos chambres luxueuses allient design exclusif et décoration haut de gamme.",
+
+      // Rooms Section
+      roomLuxo: "Luxe",
+      roomImperial: "Suite Impériale",
+      roomClassico: "Chambre Classique",
+      chooseRoom: "Choisir une chambre",
+
+      // Amenities
+      wifi: "Wi-Fi",
+      security: "Sécurité",
+      food: "Restauration",
+      reception: "Réception",
+      pool: "Piscine",
+      gym: "Salle de sport",
+      wifiDesc: "Connexion haute vitesse pour vous garder connecté en permanence.",
+      securityDesc: "Système de surveillance 24h/24 pour votre tranquillité d'esprit.",
+      foodDesc: "Petit-déjeuner et déjeuner préparés avec des produits de qualité.",
+      receptionDesc: "Service personnalisé pour votre confort dès votre arrivée.",
+      poolDesc: "Espace piscine pour vous détendre et profiter du soleil.",
+      gymDesc: "Espace entièrement équipé pour maintenir votre routine sportive.",
+
+      // About
+      historyTitle: "Notre Histoire",
+      historyText: "Fondé en 1980 par Josué, débuta comme un lieu chaleureux pour devenir une référence hôtelière.",
+      suitesCount: "Suites Exclusives",
+      rating: "Évaluation des Clients",
+      awards: "Prix d'Excellence",
+
+      // Booking Modal
+      bookingTitle: "Réservez maintenant",
+      checkIn: "Date d'arrivée :",
+      checkOut: "Date de départ :",
+      selectRoom: "Choisir la chambre :",
+      confirmBooking: "Confirmer la Réservation",
+
+      // Auth Modal
+      login: "Connexion",
+      register: "Inscription",
+      email: "E-mail",
+      password: "Mot de passe",
+      fullName: "Nom complet",
+      createAccount: "Créer un compte",
+      accessAccount: "Accéder à mon compte",
+
+      // Footer
+      aboutUs: "À propos",
+      usefulLinks: "Liens Utiles",
+      contact: "Contact",
+      footerAbout: "Troubler la paix...",
+      footerContact: "Regarder dans mes yeux...",
+      footerLinks: "La ténacité..."
   },
+
   'es-ES': {
-      // Traduções em espanhol...
+      // Header
+      navHome: "Inicio",
+      navRooms: "Habitaciones",
+      navAbout: "Sobre nosotros",
+      navContact: "Contacto",
+      loginBtn: "Iniciar sesión",
+      langPt: "Portugués",
+      langEn: "Inglés",
+      langFr: "Francés",
+      langEs: "Español",
+
+      // Hero Section
+      heroTitle: "Habitaciones y Suites",
+      heroSubtitle: "Nuestras lujosas habitaciones presentan diseños exclusivos y decoración premium.",
+
+      // Rooms Section
+      roomLuxo: "Lujo",
+      roomImperial: "Suite Imperial",
+      roomClassico: "Habitación Clásica",
+      chooseRoom: "Elegir habitación",
+
+      // Amenities
+      wifi: "Wi-Fi",
+      security: "Seguridad",
+      food: "Restauración",
+      reception: "Recepción",
+      pool: "Piscina",
+      gym: "Gimnasio",
+      wifiDesc: "Conexión de alta velocidad para mantenerte siempre conectado.",
+      securityDesc: "Sistema de vigilancia 24 horas para su tranquilidad.",
+      foodDesc: "Desayuno y almuerzo preparados con calidad y sabor.",
+      receptionDesc: "Servicio personalizado para su comodidad desde la llegada.",
+      poolDesc: "Zona de piscina para relajarse y disfrutar del sol.",
+      gymDesc: "Espacio equipado para mantener su rutina de ejercicios.",
+
+      // About
+      historyTitle: "Nuestra Historia",
+      historyText: "Fundado en 1980 por Josué, comenzó como un lugar acogedor y se convirtió en referencia en hostelería.",
+      suitesCount: "Suites Exclusivas",
+      rating: "Calificación de Huéspedes",
+      awards: "Premios a la Excelencia",
+
+      // Booking Modal
+      bookingTitle: "Haz tu reserva",
+      checkIn: "Fecha de entrada:",
+      checkOut: "Fecha de salida:",
+      selectRoom: "Seleccionar habitación:",
+      confirmBooking: "Confirmar Reserva",
+
+      // Auth Modal
+      login: "Iniciar sesión",
+      register: "Registro",
+      email: "Correo electrónico",
+      password: "Contraseña",
+      fullName: "Nombre completo",
+      createAccount: "Crear cuenta",
+      accessAccount: "Acceder a mi cuenta",
+
+      // Footer
+      aboutUs: "Sobre nosotros",
+      usefulLinks: "Enlaces útiles",
+      contact: "Contacto",
+      footerAbout: "Alterando la paz...",
+      footerContact: "Mirando a mis ojos...",
+      footerLinks: "La tenacidad..."
   }
 };
 
-// Função para carregar traduções
-function loadLanguage(lang) {
-  const elements = document.querySelectorAll('[data-translate]');
-  elements.forEach(element => {
-      const key = element.getAttribute('data-translate');
-      if(translations[lang][key]) {
-          element.textContent = translations[lang][key];
-          
-          // Para inputs/placeholders
-          if(element.placeholder) {
-              element.placeholder = translations[lang][key];
-          }
-      }
-  });
-
-  // Atualizar preços formatados
-  const priceElements = document.querySelectorAll('[data-price]');
-  priceElements.forEach(element => {
-      const price = element.getAttribute('data-price');
-      element.textContent = new Intl.NumberFormat(lang, {
-          style: 'currency',
-          currency: lang === 'pt-BR' ? 'BRL' : 'USD'
-      }).format(price);
-  });
-}
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {

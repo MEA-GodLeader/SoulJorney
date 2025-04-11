@@ -6,12 +6,17 @@
     --button-bg: #fea189;
     --card-bg: white;
     --footer-bg: #5C4433;
+    --bg-lang: #ffffff;
     --card-info: linear-gradient(135deg, #f0f0f0, #dcdcdc);
     --card-info-text:  #333;
     --card-info-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     --card-bg-rgb: 255, 255, 255;
     --border-color: rgba(0, 0, 0, 0.1);
     --icon-color: #5C4433;
+    --dep-color: #3f3f3f;
+    --rating-text: #585757;
+    --rating-number: #000000;
+    --rating-bg: rgba(255,255,255,0.1);
 }
 /*Tema Escuro */
 [data-theme="dark"] {
@@ -21,12 +26,17 @@
     --button-bg:  #6A422A;
     --card-bg: #333;
     --footer-bg: #484747;
+    --bg-lang: #1a1a1a;
     --card-info: linear-gradient(135deg, #6b6b6b, #929292);
     --card-info-text: #fff;
     --card-info-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
     --card-bg-rgb: 51, 51, 51;
     --border-color: rgba(255, 255, 255, 0.1);
     --icon-color: #fea189;
+    --dep-color: #3a2a2a;
+    --rating-text: #585757;
+    --rating-number: #000000;
+    --rating-bg: rgba(0,0,0,0.2);
 }
 
 body {
@@ -112,7 +122,7 @@ Linguas
     gap: 8px;
     cursor: pointer;
     padding: 6px 12px;
-    background: #ffffff;
+    background: var(--bg-lang);
     border: 1px solid #ddd;
     border-radius: 4px;
     transition: all 0.2s;
@@ -464,7 +474,7 @@ Booking Modal
   
   .book-modal-content {
     position: relative;
-    background: white;
+    background: var(--bg-color);
     margin: 8% auto;
     padding: 25px;
     width: 90%;
@@ -1140,6 +1150,63 @@ Sobre Nós Modal
     height: 100%;
     object-fit: cover;
 }
+/***** Estilo Básico *****/
+.dado-item {
+    margin: 15px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    text-align: center;
+}
+
+/***** Cores Padrão *****/
+[data-i18n="rating"] {
+    color: #FF6B6B; /* Vermelho coral */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dado-item h3 {
+    color: #4ECDC4; /* Verde água */
+    font-size: 2.4em;
+    margin: 10px 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+
+.dado-item {
+    background: var(--rating-bg);
+    transition: all 0.5s ease;
+}
+
+[data-i18n="rating"] {
+    color: var(--rating-text);
+}
+
+.dado-item h3 {
+    color: var(--rating-number);
+}
+
+/***** Opção com Gradiente Moderno *****/
+.gradient-version h3 {
+    background: linear-gradient(45deg, #FF9A8B, #FF6B6B, #FF3E4D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/***** Efeito Neon (opcional) *****/
+.neon-version [data-i18n="rating"] {
+    text-shadow: 0 0 10px #FF6B6B,
+                 0 0 20px #FF6B6B,
+                 0 0 30px #FF6B6B;
+}
+
+.neon-version h3 {
+    text-shadow: 0 0 10px #4ECDC4,
+                 0 0 20px #4ECDC4;
+}
 
 .texto-historia {
     flex: 1;
@@ -1214,6 +1281,10 @@ Sobre Nós Modal
     background: var(--bg-color);
     overflow: hidden;
     position: relative;
+}
+
+.depoimentos-scroll p{
+    color: var(--dep-color);
 }
 
 .scroll-track {
@@ -1645,6 +1716,7 @@ Dark Mode no Headeeer
 /* -------------------------------------------------------
 Dark Mode no following
 ------------------------------------------------------- */
+/*
 
 .dark-mode-toggle-floating {
     position: fixed;
@@ -1653,7 +1725,7 @@ Dark Mode no following
     background: rgba(var(--text-color), 0.1);
     border: none;
     border-radius: 50%;
-    padding: 12px;
+    padding: 3px;
     cursor: pointer;
     display: none;
     align-items: center;
@@ -1683,3 +1755,5 @@ Dark Mode no following
     opacity: 0;
     pointer-events: none;
 }
+
+*/
